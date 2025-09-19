@@ -44,7 +44,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "schema", "schema", "{A68580
 		Deploy\local\docker\schema\E_metrics_service_create_data.sql = Deploy\local\docker\schema\E_metrics_service_create_data.sql
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "W.Api.Logging", "W.Logging\W.Api.Logging.csproj", "{C6644561-C362-409A-A47F-CDA694CEF855}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "W.Api.Logging", "W.Api.Logging\W.Api.Logging.csproj", "{C6644561-C362-409A-A47F-CDA694CEF855}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "W.Api.Settings", "W.Api.Settings\W.Api.Settings.csproj", "{1A1F969F-5921-43DA-B455-F4310D05D57B}"
 EndProject

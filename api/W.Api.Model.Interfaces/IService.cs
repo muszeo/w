@@ -1,6 +1,6 @@
-﻿//----------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 //  Product:    
-//  File:       IContract.cs
+//  File:       IService.cs
 //  Desciption: 
 //
 //  (c) , 2025
@@ -9,23 +9,17 @@
 
 #region Usings
 using System;
-using System.Collections.Generic;
 #endregion
 
 namespace W.Api.Model.Interfaces
 {
-    public interface IContract : IModelObject
+    public interface IService : IModelObject
     {
         #region Attributes
         // Attributes
-        string Name { get; set; }
-        string Description { get; set; }
         #endregion
 
         #region Related Entities
-        IClient With { get; }
-        IList<ITask> Tasks { get; }
-        IList<IService> Services { get; }
         #endregion
 
         #region Operations

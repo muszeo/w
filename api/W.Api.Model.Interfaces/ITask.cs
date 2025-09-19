@@ -24,6 +24,7 @@ namespace W.Api.Model.Interfaces
 
         #region Related Entities
         IContract Contract { get; }
+        IService Service { get; }
         ILocation OccursAt { get; }
         IList<ITask> Children { get; }
         #endregion

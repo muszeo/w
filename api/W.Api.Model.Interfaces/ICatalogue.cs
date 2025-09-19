@@ -1,6 +1,6 @@
-﻿//----------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
 //  Product:    
-//  File:       IContract.cs
+//  File:       ICatalogue.cs
 //  Desciption: 
 //
 //  (c) , 2025
@@ -14,17 +14,13 @@ using System.Collections.Generic;
 
 namespace W.Api.Model.Interfaces
 {
-    public interface IContract : IModelObject
+    public interface ICatalogue : IModelObject
     {
         #region Attributes
         // Attributes
-        string Name { get; set; }
-        string Description { get; set; }
         #endregion
 
         #region Related Entities
-        IClient With { get; }
-        IList<ITask> Tasks { get; }
         IList<IService> Services { get; }
         #endregion
 
