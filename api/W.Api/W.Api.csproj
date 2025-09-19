@@ -1,0 +1,97 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <AWSProjectType>Lambda</AWSProjectType>
+    <!-- This property makes the build directory similar to a publish directory and helps the AWS .NET Lambda Mock Test Tool find project dependencies. -->
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <!-- Generate ready to run images during publishing to improve cold start time. -->
+    <PublishReadyToRun>false</PublishReadyToRun>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'MyTrucking.Eventing.Api' " />
+  <ItemGroup>
+    <Compile Remove="Controllers\ElementController.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Amazon.Lambda.AspNetCoreServer" Version="7.2.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.3.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.3.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.7" />
+    <PackageReference Include="Microsoft.IdentityModel.Abstractions" Version="6.21.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.21.0" />
+    <PackageReference Include="Json.Net" Version="1.0.33" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\W.Api.Dtos\W.Api.Dtos.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\W.Api.Authorisation\W.Api.Authorisation.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\W.Api.Exceptions\W.Api.Exceptions.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\W.Logging\W.Api.Logging.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\W.Api.Model.Interfaces\W.Api.Model.Interfaces.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\W.Api.Model\W.Api.Model.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\W.Api.Repository\W.Api.Repository.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\W.Api.Settings\W.Api.Settings.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="appsettings.Development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Condition="'$(ExcludeConfigFilesFromBuildOutput)'!='true'" Update="appsettings %28copy%29.Development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Condition="'$(ExcludeConfigFilesFromBuildOutput)'!='true'" Update="appsettings.Docker.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Condition="'$(ExcludeConfigFilesFromBuildOutput)'!='true'" Update="appsettings %28copy%29.Docker.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Condition="'$(ExcludeConfigFilesFromBuildOutput)'!='true'" Update="appsettings.Sit.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Condition="'$(ExcludeConfigFilesFromBuildOutput)'!='true'" Update="appsettings %28copy%29.Sit.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Condition="'$(ExcludeConfigFilesFromBuildOutput)'!='true'" Update="appsettings.Preprod.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Condition="'$(ExcludeConfigFilesFromBuildOutput)'!='true'" Update="appsettings %28copy%29.Preprod.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Condition="'$(ExcludeConfigFilesFromBuildOutput)'!='true'" Update="appsettings.Prod.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Condition="'$(ExcludeConfigFilesFromBuildOutput)'!='true'" Update="appsettings.Demo.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Microsoft.AspNetCore.Authentication.JwtBearer" />
+    <None Remove="Microsoft.IdentityModel.Tokens" />
+    <None Remove="Microsoft.IdentityModel.Abstractions" />
+    <None Remove="System.IdentityModel.Tokens.Jwt" />
+    <None Remove="Json.Net" />
+  </ItemGroup>
+</Project>

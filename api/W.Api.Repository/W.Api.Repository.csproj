@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Abstracts\**" />
+    <Compile Remove="Database\**" />
+    <Compile Remove="Factory\**" />
+    <EmbeddedResource Remove="Abstracts\**" />
+    <EmbeddedResource Remove="Database\**" />
+    <EmbeddedResource Remove="Factory\**" />
+    <None Remove="Abstracts\**" />
+    <None Remove="Database\**" />
+    <None Remove="Factory\**" />
+    <None Remove="Microsoft.Extensions.Configuration" />
+    <None Remove="Configured\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Interfaces\IDatabaseModelManager.cs" />
+    <Compile Remove="Interfaces\IModelRepository.cs" />
+    <Compile Remove="Interfaces\IReadStrategy.cs" />
+    <Compile Remove="Interfaces\IRemoveStrategy.cs" />
+    <Compile Remove="Interfaces\IRepositoryUri.cs" />
+    <Compile Remove="Interfaces\ISyncStrategy.cs" />
+    <Compile Remove="Repositories\CustomerRepository.cs" />
+    <Compile Remove="Repository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Database\" />
+    <None Remove="Npgsql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MySql.Data" Version="8.0.29" />
+    <PackageReference Include="Npgsql" Version="6.0.4" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\W.Api.Authorisation\W.Api.Authorisation.csproj" />
+    <ProjectReference Include="..\W.Logging\W.Api.Logging.csproj" />
+    <ProjectReference Include="..\W.Api.Model.Interfaces\W.Api.Model.Interfaces.csproj" />
+    <ProjectReference Include="..\W.Api.Model\W.Api.Model.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Configured\" />
+  </ItemGroup>
+</Project>

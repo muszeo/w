@@ -1,0 +1,20 @@
+﻿//----------------------------------------------------------------------------------------------------------
+//  Product:    
+//  File:       NoFactoryException.cs
+//  Desciption: 
+//
+//  (c) , 2022
+//
+//----------------------------------------------------------------------------------------------------------
+
+using System;
+
+namespace W.Api.Exceptions
+{
+    public class NoFactoryException : ApplicationException
+    {
+        public NoFactoryException ()
+        {
+        }
+    }
+}
