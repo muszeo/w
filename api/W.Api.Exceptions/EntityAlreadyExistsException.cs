@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------------------------------------------------
-//  Product:    
+//  Product:    Work Management System
 //  File:       EntityAlreadyExistsException.cs
 //  Desciption: 
 //

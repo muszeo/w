@@ -1,9 +1,9 @@
 //----------------------------------------------------------------------------------------------------------
-//  Product:    
+//  Product:    Work Management System
 //  File:       IAllocation.cs
 //  Desciption: 
 //
-//  (c) , 2025
+//  (c) Martin James Hunter, 2025
 //
 //----------------------------------------------------------------------------------------------------------
 
@@ -16,6 +16,10 @@ namespace W.Api.Model.Interfaces
     public interface IAllocation : IModelObject
     {
         #region Attributes
+        // Related Entities
+        int TaskId { get; set; }
+        int ResourceId { get; set; }
+
         // Attributes
         #endregion
 

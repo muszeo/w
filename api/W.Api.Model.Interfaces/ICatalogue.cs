@@ -1,9 +1,9 @@
 //----------------------------------------------------------------------------------------------------------
-//  Product:    
+//  Product:    Work Management System
 //  File:       ICatalogue.cs
 //  Desciption: 
 //
-//  (c) , 2025
+//  (c) Martin James Hunter, 2025
 //
 //----------------------------------------------------------------------------------------------------------
 
@@ -18,6 +18,8 @@ namespace W.Api.Model.Interfaces
     {
         #region Attributes
         // Attributes
+        string Name { get; set; }
+        string Description { get; set; }
         #endregion
 
         #region Related Entities

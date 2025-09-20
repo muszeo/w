@@ -1,32 +1,31 @@
 ﻿//----------------------------------------------------------------------------------------------------------
-//  Product:    
-//  File:       Topic.cs
+//  Product:    Work Management System
+//  File:       Catalogue.cs
 //  Desciption: 
 //
-//  (c) , 2025
+//  (c) Martin James Hunter, 2025
 //
 //----------------------------------------------------------------------------------------------------------
 
 #region Usings
 using System;
-using System.Collections.Generic;
-using System.Text.Json.Nodes;
 using W.Api.Authorisation;
 using W.Api.Model.Interfaces;
+using System.Collections.Generic;
 #endregion
 
 namespace W.Api.Model
 {
     /// <summary>
-    /// Metric Topic Model Object
+    /// Catalogue Model Object
     /// </summary>
-    public class Topic : ModelObject, IContract
+    public class Catalogue : ModelObject, ICatalogue
     {
         #region Constructor
-        /// <summary>Initializes a new instance of the <see cref="Topic" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Catalogue" /> class.</summary>
         /// <param name="manager">The manager.</param>
         /// <param name="subject">ClaimsSubject.</param>
-        public Topic (IModelManager manager, ClaimsSubject subject)
+        public Catalogue (IModelManager manager, ClaimsSubject subject)
             : base (manager, subject)
         {
         }
@@ -39,15 +38,15 @@ namespace W.Api.Model
 
         #region Related Entities
         /// <summary>
-        /// Get Metrics for this Metric Topic
+        /// Get Services for this Catalogue
         /// </summary>
-        public IList<IJurisdiction> Metrics
+        public IList<IService> Services
         {
             get {
                 return Manager
-                    .RepositoryFor<IJurisdiction> (ClaimsSubject)
+                    .RepositoryFor<IService> (ClaimsSubject)
                     .ReadWhere (
-                        $"TopicId = {Id}"
+                        $"CatalogueId = {Id}"
                     );
             }
         }

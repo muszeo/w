@@ -1,9 +1,9 @@
 ﻿//----------------------------------------------------------------------------------------------------------
-//  Product:    
+//  Product:    Work Management System
 //  File:       IOrganisation.cs
 //  Desciption: 
 //
-//  (c) , 2025
+//  (c) Martin James Hunter, 2025
 //
 //----------------------------------------------------------------------------------------------------------
 
@@ -17,6 +17,10 @@ namespace W.Api.Model.Interfaces
     public interface IOrganisation : IModelObject
     {
         #region Attributes
+        // Related Entities
+        int TimeZoneId { get; set; }
+        int Parent__OrganisationId { get; set; }
+
         // Attributes
         string Name { get; set; }
         string Description { get; set; }
@@ -24,6 +28,7 @@ namespace W.Api.Model.Interfaces
 
         #region Related Entities
         ITimeZone TimeZone { get; }
+        IOrganisation Parent { get; }
         IList<IOrganisation> Children { get; }
         #endregion
 

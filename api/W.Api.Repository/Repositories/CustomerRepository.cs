@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------------------------------------------------
-//  Product:    MyTruckingWebAPI
+//  Product:    Work Management SystemMyTruckingWebAPI
 //  File:       CustomerRepository.cs
 //  Desciption: Customer data layer 
 //

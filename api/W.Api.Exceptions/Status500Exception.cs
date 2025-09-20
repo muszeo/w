@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------------------------------------------------
-//  Product:    
+//  Product:    Work Management System
 //  File:       Status500Exception.cs
 //  Desciption: 
 //

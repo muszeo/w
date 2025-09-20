@@ -1,0 +1,57 @@
+//----------------------------------------------------------------------------------------------------------
+//  Product:    Work Management System
+//  File:       Service.cs
+//  Desciption: 
+//
+//  (c) Martin James Hunter, 2025
+//
+//----------------------------------------------------------------------------------------------------------
+
+#region Usings
+using System;
+using W.Api.Authorisation;
+using W.Api.Model.Interfaces;
+#endregion
+
+namespace W.Api.Model
+{
+    /// <summary>
+    /// Service Model Object
+    /// </summary>
+    public class Service : ModelObject, IService
+    {
+        #region Constructor
+        /// <summary>Initializes a new instance of the <see cref="Service" /> class.</summary>
+        /// <param name="manager">The manager.</param>
+        /// <param name="subject">ClaimsSubject.</param>
+        public Service (IModelManager manager, ClaimsSubject subject)
+            : base (manager, subject)
+        {
+        }
+        #endregion
+
+        #region Attributes
+        // Related Entities
+        public int CatalogueId { get; set; }
+
+        // Attributes
+        #endregion
+
+        #region Related Entities
+        /// <summary>
+        /// Gets the Catalogue for this Service
+        /// </summary>
+        public ICatalogue Catalogue
+        {
+            get {
+                return Manager
+                    .RepositoryFor<ICatalogue> (ClaimsSubject)
+                    .Read (CatalogueId);
+            }
+        }
+        #endregion
+
+        #region Public Operations
+        #endregion
+    }
+}

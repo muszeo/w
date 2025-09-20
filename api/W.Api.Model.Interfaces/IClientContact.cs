@@ -1,9 +1,9 @@
 //----------------------------------------------------------------------------------------------------------
-//  Product:    
+//  Product:    Work Management System
 //  File:       IClientContact.cs
 //  Desciption: 
 //
-//  (c) , 2025
+//  (c) Martin James Hunter, 2025
 //
 //----------------------------------------------------------------------------------------------------------
 
@@ -16,6 +16,10 @@ namespace W.Api.Model.Interfaces
     public interface IClientContact : IModelObject
     {
         #region Attributes
+        // Related Entities
+        int ClientId { get; set; }
+        int ContactId { get; set; }
+
         // Attributes
         #endregion
 

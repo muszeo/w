@@ -1,9 +1,9 @@
 //----------------------------------------------------------------------------------------------------------
-//  Product:    
+//  Product:    Work Management System
 //  File:       ISite.cs
 //  Desciption: 
 //
-//  (c) , 2025
+//  (c) Martin James Hunter, 2025
 //
 //----------------------------------------------------------------------------------------------------------
 
@@ -17,6 +17,9 @@ namespace W.Api.Model.Interfaces
     public interface ISite : IModelObject
     {
         #region Attributes
+        // Related Entities
+        int OperatedBy__OrganisationId { get; set; }
+
         // Attributes
         string Name { get; set; }
         string Description { get; set; }

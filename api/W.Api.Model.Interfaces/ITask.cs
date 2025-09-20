@@ -1,9 +1,9 @@
 ﻿//----------------------------------------------------------------------------------------------------------
-//  Product:    
+//  Product:    Work Management System
 //  File:       ITask.cs
 //  Desciption: 
 //
-//  (c) , 2025
+//  (c) Martin James Hunter, 2025
 //
 //----------------------------------------------------------------------------------------------------------
 
@@ -17,15 +17,22 @@ namespace W.Api.Model.Interfaces
     public interface ITask : IModelObject
     {
         #region Attributes
+        // Related Entities
+        int ServiceId { get; set; }
+        int ContractId { get; set; }
+        int Parent__TaskId { get; set; }
+        int OccursAt__LocationId { get; set; }
+
         // Attributes
-        DateTime? Start { get; set; }
         DateTime? End { get; set; }
+        DateTime? Start { get; set; }
         #endregion
 
         #region Related Entities
-        IContract Contract { get; }
         IService Service { get; }
+        IContract Contract { get; }
         ILocation OccursAt { get; }
+        ITask Parent { get; }
         IList<ITask> Children { get; }
         #endregion
 

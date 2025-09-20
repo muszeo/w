@@ -1,9 +1,9 @@
 ﻿//----------------------------------------------------------------------------------------------------------
-//  Product:    
+//  Product:    Work Management System
 //  File:       ClaimsExtractor.cs
 //  Desciption: Extracts Subject Claims from ClaimsPrincipal.
 //
-//  (c) , 2025
+//  (c) Martin James Hunter, 2025
 //
 //----------------------------------------------------------------------------------------------------------
 

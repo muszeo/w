@@ -1,16 +1,14 @@
 ﻿//----------------------------------------------------------------------------------------------------------
-//  Product:    
-//  File:       IdentityContext.cs
+//  Product:    Work Management System
+//  File:       Consumable.cs
 //  Desciption: 
 //
-//  (c) , 2025
+//  (c) Martin James Hunter, 2025
 //
 //----------------------------------------------------------------------------------------------------------
 
 #region Usings
 using System;
-using System.Collections.Generic;
-using System.Text.Json.Nodes;
 using W.Api.Authorisation;
 using W.Api.Model.Interfaces;
 #endregion
@@ -18,25 +16,21 @@ using W.Api.Model.Interfaces;
 namespace W.Api.Model
 {
     /// <summary>
-    /// IdentityContext Model Object
+    /// Consumable Model Object
     /// </summary>
-    public class IdentityContext : Context, ILocation
+    public class Consumable : Resource, IConsumable
     {
         #region Constructor
-        /// <summary>Initializes a new instance of the <see cref="IdentityContext" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Consumable" /> class.</summary>
         /// <param name="manager">The manager.</param>
         /// <param name="subject">ClaimsSubject.</param>
-        public IdentityContext (IModelManager manager, ClaimsSubject subject)
+        public Consumable (IModelManager manager, ClaimsSubject subject)
             : base (manager, subject)
         {
         }
         #endregion
 
         #region Attributes
-        public string SubjectIdentifier { get; set; }
-        public string Provider { get; set; }
-        public string Username { get; set; }
-        public string Email { get; set; }
         #endregion
 
         #region Related Entities

@@ -1,9 +1,9 @@
 ﻿//----------------------------------------------------------------------------------------------------------
-//  Product:    
+//  Product:    Work Management System
 //  File:       ILocation.cs
 //  Desciption: 
 //
-//  (c) , 2025
+//  (c) Martin James Hunter, 2025
 //
 //----------------------------------------------------------------------------------------------------------
 
@@ -16,6 +16,10 @@ namespace W.Api.Model.Interfaces
     public interface ILocation : IModelObject
     {
         #region Attributes
+        // Related Entities
+        public int TimeZoneId { get; set; }
+        public int GovernedBy__JurisdictionId { get; set; }
+
         // Attributes
         #endregion
 

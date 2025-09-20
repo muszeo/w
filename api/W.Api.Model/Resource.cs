@@ -1,16 +1,14 @@
 ﻿//----------------------------------------------------------------------------------------------------------
-//  Product:    
-//  File:       Context.cs
+//  Product:    Work Management System
+//  File:       Resource.cs
 //  Desciption: 
 //
-//  (c) , 2025
+//  (c) Martin James Hunter, 2025
 //
 //----------------------------------------------------------------------------------------------------------
 
 #region Usings
 using System;
-using System.Collections.Generic;
-using System.Text.Json.Nodes;
 using W.Api.Authorisation;
 using W.Api.Model.Interfaces;
 #endregion
@@ -18,37 +16,39 @@ using W.Api.Model.Interfaces;
 namespace W.Api.Model
 {
     /// <summary>
-    /// Context Model Object
+    /// Resource Model Object
     /// </summary>
-    public abstract class Context : ModelObject, IContext
+    public abstract class Resource : ModelObject, IResource
     {
         #region Constructor
-        /// <summary>Initializes a new instance of the <see cref="Context" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Resource" /> class.</summary>
         /// <param name="manager">The manager.</param>
         /// <param name="subject">ClaimsSubject.</param>
-        public Context (IModelManager manager, ClaimsSubject subject)
+        public Resource (IModelManager manager, ClaimsSubject subject)
             : base (manager, subject)
         {
         }
         #endregion
 
         #region Attributes
-        public DateTime? Start { get; set; }
-        public DateTime? End { get; set; }
+        // Related Entities
+        public int BasedAt__LocationId { get; set; }
+
+        // Attributes
+        public string Name { get; set; }
+        public string Description { get; set; }
         #endregion
 
         #region Related Entities
         /// <summary>
-        /// Get Observations for this IdentityContext
+        /// BasedAt Location for this Resource
         /// </summary>
-        public IList<ITimeZone> Observations
+        public ILocation BasedAt
         {
             get {
                 return Manager
-                    .RepositoryFor<ITimeZone> (ClaimsSubject)
-                    .ReadWhere (
-                        $"ContextId = {Id}"
-                    );
+                    .RepositoryFor<ILocation> (ClaimsSubject)
+                    .Read (BasedAt__LocationId);
             }
         }
         #endregion

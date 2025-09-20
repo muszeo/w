@@ -1,5 +1,5 @@
 ﻿//----------------------------------------------------------------------------------------------------------
-//  Product:    
+//  Product:    Work Management System
 //  File:       AbstractWebApiController.cs
 //  Desciption: Base controller for WebApi
 //

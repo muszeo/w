@@ -1,9 +1,9 @@
 //----------------------------------------------------------------------------------------------------------
-//  Product:    
+//  Product:    Work Management System
 //  File:       IService.cs
 //  Desciption: 
 //
-//  (c) , 2025
+//  (c) Martin James Hunter, 2025
 //
 //----------------------------------------------------------------------------------------------------------
 
@@ -16,10 +16,14 @@ namespace W.Api.Model.Interfaces
     public interface IService : IModelObject
     {
         #region Attributes
+        // Related Entities
+        int CatalogueId { get; set; }
+
         // Attributes
         #endregion
 
         #region Related Entities
+        ICatalogue Catalogue { get; }
         #endregion
 
         #region Operations
