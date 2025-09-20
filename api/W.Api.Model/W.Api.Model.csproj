@@ -11,7 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\W.Api.Authorisation\W.Api.Authorisation.csproj" />
     <ProjectReference Include="..\W.Api.Exceptions\W.Api.Exceptions.csproj" />
-    <ProjectReference Include="..\W.Logging\W.Api.Logging.csproj" />
+    <ProjectReference Include="..\W.Api.Logging\W.Api.Logging.csproj" />
     <ProjectReference Include="..\W.Api.Model.Interfaces\W.Api.Model.Interfaces.csproj" />
   </ItemGroup>
   <ItemGroup>

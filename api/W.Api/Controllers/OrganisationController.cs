@@ -1,47 +1,49 @@
 //----------------------------------------------------------------------------------------------------------
 //  Product:    Work Management System
-//  File:       GroupController.cs
-//  Desciption: GroupController WebAPI
+//  File:       OrganisationController.cs
+//  Desciption: OrganisationController WebAPI
+//
+//  Domain:
+//  - Organisation
+//  - Site
 //
 //  (c) Martin James Hunter, 2025
 //
 //----------------------------------------------------------------------------------------------------------
 
 #region Usings
-using System.Xml.Linq;
-using System.Windows.Input;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using W.Api.Dtos;
 using W.Api.Model;
 using W.Api.Logging;
 using W.Api.Dtos.Lists;
 using W.Api.Exceptions;
 using W.Api.Repository;
-using Microsoft.AspNetCore.Authorization;
 using W.Api.Authorisation;
 using W.Api.Dtos.Builders;
 using W.Api.Model.Interfaces;
-using static W.Api.Settings.Constants.Events;
+using Microsoft.AspNetCore.Mvc;
+using W.Api.Repository.Configured;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authorization;
 #endregion
 
 namespace W.Api.Controllers
 {
     /// <summary>
-    /// GroupController WebAPI
+    /// OrganisationController WebAPI
     /// </summary>
     /// <seealso cref="W.Api.Controllers.AbstractWebApiController" />
     [Authorize]
     [Produces ("application/json")]
     [Route ("api/[controller]")]
     [ApiController]
-    public class GroupController : AbstractWebApiController
+    public class OrganisationController : AbstractWebApiController
     {
         #region Constructor
-        /// <summary>Initializes a new instance of the <see cref="GroupController" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="OrganisationController" /> class.</summary>
         /// <param name="databaseRepository">The database repository.</param>
         /// <param name="security">The security configuration.</param>
-        public GroupController (IOptions<DatabaseManager> databaseRepository, IOptions<SecurityManager> security)
+        public OrganisationController (IOptions<DatabaseManager> databaseRepository, IOptions<SecurityManager> security)
             : base (databaseRepository, security)
         {
         }
@@ -49,42 +51,44 @@ namespace W.Api.Controllers
 
         #region GETs
         /// <summary>
-        /// Gets a Metric Group using a specified {identifier}.
+        /// Gets a Organisation using a specified {identifier}.
         ///
         /// verb:       GET
-        /// method:     /api/group/{id}
+        /// method:     /api/organisation/{id}
         ///
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>
-        /// GroupDto
+        /// OrganisationDto
         /// </returns>
         [HttpGet ("{id}")]
         [Produces ("application/json")]
-        public ActionResult<GroupDto> Get (int id)
+        public ActionResult<OrganisationDto> Get (int id)
         {
-            Logger.Debug ($"Calling Group -> Get - {id}");
+            Logger.Debug ($"Calling Organisation -> Get - {id}");
 
             return ExecuteHttp (
                 () => {
 
                     // Create default return.
-                    GroupDto _rtn = new GroupDto ();
+                    OrganisationDto _rtn = new OrganisationDto ();
 
                     // Check API Scopes Authorisation.
                     HasSubjectReadScope ();
 
-                    // Get Group Item.
-                    IClient _g =
+                    // Get Organisation Item.
+                    IOrganisation _o =
                         Manager ()
-                            .RepositoryFor<IClient> (Subject)
+                            .RepositoryFor<IOrganisation> (Subject)
                             .Read (id);
 
                     // Create return
-                    if (_g != null) {
-                        _rtn = _rtn.From (_g);
+                    if (_o != null) {
+
+                        _rtn = _rtn.From (_o);
+
                     } else {
-                        throw new EntityNotFoundException ("Group", id);
+                        throw new EntityNotFoundException ("Organisation", id);
                     }
 
                     return _rtn;
@@ -95,14 +99,18 @@ namespace W.Api.Controllers
 
         #region POSTs
         /// <summary>
-        /// Posts a new Metric Group.
+        /// Posts a new Organisation.
+        ///
+        /// verb:       POST
+        /// method:     /api/Organisation
+        ///
         /// </summary>
         /// <param name="dto"></param>
-        /// <returns>GroupDto</returns>
+        /// <returns>OrganisationDto</returns>
         [HttpPost]
-        public ActionResult<GroupDto> Post ([FromBody] NewGroupDto dto)
+        public ActionResult<OrganisationDto> Post ([FromBody] NewOrganisationDto dto)
         {
-            Logger.Debug ($"Calling Group -> Post New Metric *Group* - {dto}");
+            Logger.Debug ($"Calling Organisation -> Post New Organisation - {dto}");
             return ExecuteHttp (
                 () => {
 
@@ -110,29 +118,31 @@ namespace W.Api.Controllers
                     HasSubjectWriteScope ();
                     HasSubjectReadScope ();
 
-                    GroupDto _rtn = new GroupDto ();
+                    OrganisationDto _rtn = new OrganisationDto ();
 
                     Manager ().Scoped (
                         (trans) => {
 
                             Logger.Info (
-                                $"Creating new Group '{dto.Name}'"
+                                $"Creating new Organisation for SubjectIdentifier '{Subject.Identifier}' and Provider '{Subject.Provider}'"
                             );
 
-                            // Create new Group
-                            IClient _g = new Group (Manager (), Subject) {
+                            // Create new Organisation
+                            // NB. We use the SubjectIdentifier and Provider from the access_token provided in the call to this method.
+                            IOrganisation _c = new Organisation (Manager (), Subject) {
                                 Name = dto.Name,
-                                Description = dto.Description,
+                                Description = dto.Description,                                
                                 CreatedOn = DateTime.Now
                             };
 
-                            // Save new Group
+                            // Save new Organisation
                             Manager ()
-                                .RepositoryFor<IClient> (Subject)
-                                .Upsert (_g, trans);
+                                .RepositoryFor<IOrganisation> (Subject)
+                                .Upsert (_c, trans);
 
-                            // Return new Group
-                            _rtn = _rtn.From (_g);
+                            // Return new Organisation
+                            _rtn = _rtn.From (_c);
+
                         }
                     );
 

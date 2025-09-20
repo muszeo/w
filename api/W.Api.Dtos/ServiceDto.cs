@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------------------------------------
 //  Product:    Work Management System
-//  File:       TopicDto.cs
+//  File:       ServiceDto.cs
 //  Desciption: 
 //
 //  (c) Martin James Hunter, 2025
@@ -9,24 +9,26 @@
 
 #region Usings
 using System;
-using System.Text.Json;
-using System.Text.Json.Nodes;
 #endregion
 
 namespace W.Api.Dtos
 {
-    public class TopicDto : DtoObject, IDtoObject
+    public class ServiceDto : DtoObject, IDtoObject
     {
         #region Constructor
         /// <summary>
-        /// Initializes a new instance of the <see cref="TopicDto"/> class.
+        /// Initializes a new instance of the <see cref="ServiceDto"/> class.
         /// </summary>
-        public TopicDto () : base () { }
+        public ServiceDto () : base () { }
         #endregion
 
         #region Attributes
-        public string Name { get; set; }
-        public string Description { get; set; }
+        // Related Entities
+        public int CatalogueId { get; set; }
+
+        // Attributes
+
+        // Audit
         public DateTime CreatedOn { get; set; }
         #endregion
     }

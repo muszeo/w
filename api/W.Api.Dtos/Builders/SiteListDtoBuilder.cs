@@ -1,6 +1,6 @@
 ﻿//----------------------------------------------------------------------------------------------------------
 //  Product:    Work Management System
-//  File:       ObservationListDtoBuilder.cs
+//  File:       SiteListDtoBuilder.cs
 //  Desciption: 
 //
 //  (c) Martin James Hunter, 2025
@@ -15,19 +15,19 @@ using System.Collections.Generic;
 
 namespace W.Api.Dtos.Builders
 {
-    public static class ObservationListDtoBuilder
+    public static class SiteListDtoBuilder
     {
-        /// <summary>Maps User Model to List of Observation Dto.</summary>
-        /// <param name="dto">The Observation dto.</param>
-        /// <param name="model">The Observation model.</param>
+        /// <summary>Maps Model to List of Site Dto.</summary>
+        /// <param name="dto">The Site dto.</param>
+        /// <param name="model">The Site model.</param>
         /// <returns>
-        ///   ObservationListDto
+        ///   SiteListDto
         /// </returns>
-        public static ObservationListDto From (this ObservationListDto dto, IList<ITimeZone> model)
+        public static SiteListDto From (this SiteListDto dto, IList<ISite> model)
         {
-            foreach (ITimeZone _o in model) {
+            foreach (ISite _m in model) {
                 dto.Items.Add (
-                    new ObservationDto ().From (_o)
+                    new SiteDto ().From (_m)
                 );
             }
             return dto;

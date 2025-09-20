@@ -1,47 +1,48 @@
 //----------------------------------------------------------------------------------------------------------
 //  Product:    Work Management System
-//  File:       SourceController.cs
-//  Desciption: SourceController WebAPI
+//  File:       TaskController.cs
+//  Desciption: TaskController WebAPI
+//
+//  Domain:
+//  - Task
 //
 //  (c) Martin James Hunter, 2025
 //
 //----------------------------------------------------------------------------------------------------------
 
 #region Usings
-using System.Xml.Linq;
-using System.Windows.Input;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using W.Api.Dtos;
 using W.Api.Model;
 using W.Api.Logging;
 using W.Api.Dtos.Lists;
 using W.Api.Exceptions;
 using W.Api.Repository;
-using Microsoft.AspNetCore.Authorization;
 using W.Api.Authorisation;
 using W.Api.Dtos.Builders;
 using W.Api.Model.Interfaces;
-using static W.Api.Settings.Constants.Events;
+using Microsoft.AspNetCore.Mvc;
+using W.Api.Repository.Configured;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authorization;
 #endregion
 
 namespace W.Api.Controllers
 {
     /// <summary>
-    /// SourceController WebAPI
+    /// TaskController WebAPI
     /// </summary>
     /// <seealso cref="W.Api.Controllers.AbstractWebApiController" />
     [Authorize]
     [Produces ("application/json")]
     [Route ("api/[controller]")]
     [ApiController]
-    public class SourceController : AbstractWebApiController
+    public class TaskController : AbstractWebApiController
     {
         #region Constructor
-        /// <summary>Initializes a new instance of the <see cref="SourceController" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="TaskController" /> class.</summary>
         /// <param name="databaseRepository">The database repository.</param>
         /// <param name="security">The security configuration.</param>
-        public SourceController (IOptions<DatabaseManager> databaseRepository, IOptions<SecurityManager> security)
+        public TaskController (IOptions<DatabaseManager> databaseRepository, IOptions<SecurityManager> security)
             : base (databaseRepository, security)
         {
         }
@@ -49,42 +50,44 @@ namespace W.Api.Controllers
 
         #region GETs
         /// <summary>
-        /// Gets a Metric Source using a specified {identifier}.
+        /// Gets a Task using a specified {identifier}.
         ///
         /// verb:       GET
-        /// method:     /api/source/{id}
+        /// method:     /api/Task/{id}
         ///
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>
-        /// SourceDto
+        /// TaskDto
         /// </returns>
         [HttpGet ("{id}")]
         [Produces ("application/json")]
-        public ActionResult<SourceDto> Get (int id)
+        public ActionResult<TaskDto> Get (int id)
         {
-            Logger.Debug ($"Calling Source -> Get - {id}");
+            Logger.Debug ($"Calling Task -> Get - {id}");
 
             return ExecuteHttp (
                 () => {
 
                     // Create default return.
-                    SourceDto _rtn = new SourceDto ();
+                    TaskDto _rtn = new TaskDto ();
 
                     // Check API Scopes Authorisation.
                     HasSubjectReadScope ();
 
-                    // Get Source Item.
-                    IOrganisation _s =
+                    // Get Task Item.
+                    ITask _t =
                         Manager ()
-                            .RepositoryFor<IOrganisation> (Subject)
+                            .RepositoryFor<ITask> (Subject)
                             .Read (id);
 
                     // Create return
-                    if (_s != null) {
-                        _rtn = _rtn.From (_s);
+                    if (_t != null) {
+
+                        _rtn = _rtn.From (_t);
+
                     } else {
-                        throw new EntityNotFoundException ("Source", id);
+                        throw new EntityNotFoundException ("Task", id);
                     }
 
                     return _rtn;
@@ -95,14 +98,18 @@ namespace W.Api.Controllers
 
         #region POSTs
         /// <summary>
-        /// Posts a new Metric Source.
+        /// Posts a new Task.
+        ///
+        /// verb:       POST
+        /// method:     /api/Task
+        ///
         /// </summary>
         /// <param name="dto"></param>
-        /// <returns>SourceDto</returns>
+        /// <returns>TaskDto</returns>
         [HttpPost]
-        public ActionResult<SourceDto> Post ([FromBody] NewSourceDto dto)
+        public ActionResult<TaskDto> Post ([FromBody] NewTaskDto dto)
         {
-            Logger.Debug ($"Calling Source -> Post New Metric *Source* - {dto}");
+            Logger.Debug ($"Calling Task -> Post New Task - {dto}");
             return ExecuteHttp (
                 () => {
 
@@ -110,31 +117,40 @@ namespace W.Api.Controllers
                     HasSubjectWriteScope ();
                     HasSubjectReadScope ();
 
-                    SourceDto _rtn = new SourceDto ();
+                    TaskDto _rtn = new TaskDto ();
 
                     Manager ().Scoped (
                         (trans) => {
 
                             Logger.Info (
-                                $"Creating new Source '{dto.Name}'"
+                                $"Creating new Task for SubjectIdentifier '{Subject.Identifier}' and Provider '{Subject.Provider}'"
                             );
 
-                            // Create new Source
-                            IOrganisation _s = new Source (Manager (), Subject) {
-                                Name = dto.Name,
-                                Description = dto.Description,
-                                Type = dto.Type,
-                                Code = dto.Code,
+                            // Create new Task
+                            ITask _c = new Model.Task (Manager (), Subject) {
+
+                                // Related Entities
+                                ServiceId = dto.ServiceId,
+                                ContractId = dto.ContractId,
+                                Parent__TaskId = dto.Parent__TaskId,
+                                OccursAt__LocationId = dto.OccursAt__LocationId,
+
+                                // Attributes               
+                                Start = dto.Start,
+                                End = dto.End,
+
+                                // Audit
                                 CreatedOn = DateTime.Now
                             };
 
-                            // Save new Source
+                            // Save new Task
                             Manager ()
-                                .RepositoryFor<IOrganisation> (Subject)
-                                .Upsert (_s, trans);
+                                .RepositoryFor<ITask> (Subject)
+                                .Upsert (_c, trans);
 
-                            // Return new Source
-                            _rtn = _rtn.From (_s);
+                            // Return new Task
+                            _rtn = _rtn.From (_c);
+
                         }
                     );
 

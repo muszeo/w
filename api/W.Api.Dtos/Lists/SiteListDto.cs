@@ -1,6 +1,6 @@
 ﻿//----------------------------------------------------------------------------------------------------------
 //  Product:    Work Management System
-//  File:       NewContextDto.cs
+//  File:       SiteListDto.cs
 //  Desciption: 
 //
 //  (c) Martin James Hunter, 2025
@@ -8,19 +8,23 @@
 //----------------------------------------------------------------------------------------------------------
 
 #region Usings
-using System;
-using System.Text.Json;
-using System.Text.Json.Nodes;
 using System.Collections.Generic;
 #endregion
 
-namespace W.Api.Dtos
+namespace W.Api.Dtos.Lists
 {
-    public class NewContextDto : NewDtoObject, INewDtoObject
+    public class SiteListDto : ListDtoObject, IListDtoObject
     {
+        #region Constructor
+        /// <summary>Initializes a new instance of the <see cref="SiteListDto" /> class.</summary>
+        public SiteListDto ()
+        {
+            Items = new List<SiteDto> ();
+        }
+        #endregion
+
         #region Attributes
-        public DateTime Start { get; set; }
-        public DateTime End { get; set; }
+        public List<SiteDto> Items { get; set; }
         #endregion
     }
 }

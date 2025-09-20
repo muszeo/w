@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\W.Logging\W.Api.Logging.csproj" />
+    <ProjectReference Include="..\W.Api.Logging\W.Api.Logging.csproj" />
     <ProjectReference Include="..\W.Api.Settings\W.Api.Settings.csproj" />
   </ItemGroup>
   <ItemGroup>

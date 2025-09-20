@@ -1,47 +1,49 @@
-//----------------------------------------------------------------------------------------------------------
+﻿//----------------------------------------------------------------------------------------------------------
 //  Product:    Work Management System
-//  File:       TopicController.cs
-//  Desciption: TopicController WebAPI
+//  File:       CatalogueController.cs
+//  Desciption: CatalogueController WebAPI
+//
+//  Domain:
+//  - Catalogue
+//  - Service
 //
 //  (c) Martin James Hunter, 2025
 //
 //----------------------------------------------------------------------------------------------------------
 
 #region Usings
-using System.Xml.Linq;
-using System.Windows.Input;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using W.Api.Dtos;
 using W.Api.Model;
 using W.Api.Logging;
 using W.Api.Dtos.Lists;
 using W.Api.Exceptions;
 using W.Api.Repository;
-using Microsoft.AspNetCore.Authorization;
 using W.Api.Authorisation;
 using W.Api.Dtos.Builders;
 using W.Api.Model.Interfaces;
-using static W.Api.Settings.Constants.Events;
+using Microsoft.AspNetCore.Mvc;
+using W.Api.Repository.Configured;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authorization;
 #endregion
 
 namespace W.Api.Controllers
 {
     /// <summary>
-    /// TopicController WebAPI
+    /// CatalogueController WebAPI
     /// </summary>
     /// <seealso cref="W.Api.Controllers.AbstractWebApiController" />
     [Authorize]
     [Produces ("application/json")]
     [Route ("api/[controller]")]
     [ApiController]
-    public class TopicController : AbstractWebApiController
+    public class CatalogueController : AbstractWebApiController
     {
         #region Constructor
-        /// <summary>Initializes a new instance of the <see cref="TopicController" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="CatalogueController" /> class.</summary>
         /// <param name="databaseRepository">The database repository.</param>
         /// <param name="security">The security configuration.</param>
-        public TopicController (IOptions<DatabaseManager> databaseRepository, IOptions<SecurityManager> security)
+        public CatalogueController (IOptions<DatabaseManager> databaseRepository, IOptions<SecurityManager> security)
             : base (databaseRepository, security)
         {
         }
@@ -49,42 +51,44 @@ namespace W.Api.Controllers
 
         #region GETs
         /// <summary>
-        /// Gets a Metric Topic using a specified {identifier}.
+        /// Gets a Catalogue using a specified {identifier}.
         ///
         /// verb:       GET
-        /// method:     /api/topic/{id}
+        /// method:     /api/catalogue/{id}
         ///
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>
-        /// TopicDto
+        /// CatalogueDto
         /// </returns>
         [HttpGet ("{id}")]
         [Produces ("application/json")]
-        public ActionResult<TopicDto> Get (int id)
+        public ActionResult<CatalogueDto> Get (int id)
         {
-            Logger.Debug ($"Calling Topic -> Get - {id}");
+            Logger.Debug ($"Calling Catalogue -> Get - {id}");
 
             return ExecuteHttp (
                 () => {
 
                     // Create default return.
-                    TopicDto _rtn = new TopicDto ();
+                    CatalogueDto _rtn = new CatalogueDto ();
 
                     // Check API Scopes Authorisation.
                     HasSubjectReadScope ();
 
-                    // Get Topic Item.
-                    IContract _t =
+                    // Get Catalogue Item.
+                    ICatalogue _c =
                         Manager ()
-                            .RepositoryFor<IContract> (Subject)
+                            .RepositoryFor<ICatalogue> (Subject)
                             .Read (id);
 
                     // Create return
-                    if (_t != null) {
-                        _rtn = _rtn.From (_t);
+                    if (_c != null) {
+
+                        _rtn = _rtn.From (_c);
+
                     } else {
-                        throw new EntityNotFoundException ("Topic", id);
+                        throw new EntityNotFoundException ("Catalogue", id);
                     }
 
                     return _rtn;
@@ -95,14 +99,18 @@ namespace W.Api.Controllers
 
         #region POSTs
         /// <summary>
-        /// Posts a new Metric Topic.
+        /// Posts a new Catalogue.
+        ///
+        /// verb:       POST
+        /// method:     /api/catalogue
+        ///
         /// </summary>
         /// <param name="dto"></param>
-        /// <returns>TopicDto</returns>
+        /// <returns>CatalogueDto</returns>
         [HttpPost]
-        public ActionResult<TopicDto> Post ([FromBody] NewTopicDto dto)
+        public ActionResult<CatalogueDto> Post ([FromBody] NewCatalogueDto dto)
         {
-            Logger.Debug ($"Calling Topic -> Post New Metric *Topic* - {dto}");
+            Logger.Debug ($"Calling Catalogue -> Post New Catalogue - {dto}");
             return ExecuteHttp (
                 () => {
 
@@ -110,29 +118,31 @@ namespace W.Api.Controllers
                     HasSubjectWriteScope ();
                     HasSubjectReadScope ();
 
-                    TopicDto _rtn = new TopicDto ();
+                    CatalogueDto _rtn = new CatalogueDto ();
 
                     Manager ().Scoped (
                         (trans) => {
 
                             Logger.Info (
-                                $"Creating new Topic '{dto.Name}'"
+                                $"Creating new Catalogue for SubjectIdentifier '{Subject.Identifier}' and Provider '{Subject.Provider}'"
                             );
 
-                            // Create new Topic
-                            IContract _t = new Topic (Manager (), Subject) {
+                            // Create new Catalogue
+                            // NB. We use the SubjectIdentifier and Provider from the access_token provided in the call to this method.
+                            ICatalogue _c = new Catalogue (Manager (), Subject) {
                                 Name = dto.Name,
-                                Description = dto.Description,
+                                Description = dto.Description,                                
                                 CreatedOn = DateTime.Now
                             };
 
-                            // Save new Topic
+                            // Save new Catalogue
                             Manager ()
-                                .RepositoryFor<IContract> (Subject)
-                                .Upsert (_t, trans);
+                                .RepositoryFor<ICatalogue> (Subject)
+                                .Upsert (_c, trans);
 
-                            // Return new Topic
-                            _rtn = _rtn.From (_t);
+                            // Return new Catalogue
+                            _rtn = _rtn.From (_c);
+
                         }
                     );
 

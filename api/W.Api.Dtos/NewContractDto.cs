@@ -1,6 +1,6 @@
-//----------------------------------------------------------------------------------------------------------
+﻿//----------------------------------------------------------------------------------------------------------
 //  Product:    Work Management System
-//  File:       NewTopicDto.cs
+//  File:       NewContractDto.cs
 //  Desciption: 
 //
 //  (c) Martin James Hunter, 2025
@@ -9,14 +9,11 @@
 
 #region Usings
 using System;
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Collections.Generic;
 #endregion
 
 namespace W.Api.Dtos
 {
-    public class NewTopicDto : NewDtoObject, INewDtoObject
+    public class NewContractDto : NewDtoObject, INewDtoObject
     {
         #region Attributes
         public string Name { get; set; }

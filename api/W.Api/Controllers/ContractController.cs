@@ -1,47 +1,49 @@
-//----------------------------------------------------------------------------------------------------------
+﻿//----------------------------------------------------------------------------------------------------------
 //  Product:    Work Management System
-//  File:       SubjectController.cs
-//  Desciption: SubjectController WebAPI
+//  File:       ContractController.cs
+//  Desciption: ContractController WebAPI
+//
+//  Domain:
+//  - Contract
+//  - Client
 //
 //  (c) Martin James Hunter, 2025
 //
 //----------------------------------------------------------------------------------------------------------
 
 #region Usings
-using System.Xml.Linq;
-using System.Windows.Input;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using W.Api.Dtos;
 using W.Api.Model;
 using W.Api.Logging;
 using W.Api.Dtos.Lists;
 using W.Api.Exceptions;
 using W.Api.Repository;
-using Microsoft.AspNetCore.Authorization;
 using W.Api.Authorisation;
 using W.Api.Dtos.Builders;
 using W.Api.Model.Interfaces;
-using static W.Api.Settings.Constants.Events;
+using Microsoft.AspNetCore.Mvc;
+using W.Api.Repository.Configured;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authorization;
 #endregion
 
 namespace W.Api.Controllers
 {
     /// <summary>
-    /// SubjectController WebAPI
+    /// ContractController WebAPI
     /// </summary>
     /// <seealso cref="W.Api.Controllers.AbstractWebApiController" />
     [Authorize]
     [Produces ("application/json")]
     [Route ("api/[controller]")]
     [ApiController]
-    public class SubjectController : AbstractWebApiController
+    public class ContractController : AbstractWebApiController
     {
         #region Constructor
-        /// <summary>Initializes a new instance of the <see cref="SubjectController" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="ContractController" /> class.</summary>
         /// <param name="databaseRepository">The database repository.</param>
         /// <param name="security">The security configuration.</param>
-        public SubjectController (IOptions<DatabaseManager> databaseRepository, IOptions<SecurityManager> security)
+        public ContractController (IOptions<DatabaseManager> databaseRepository, IOptions<SecurityManager> security)
             : base (databaseRepository, security)
         {
         }
@@ -49,42 +51,44 @@ namespace W.Api.Controllers
 
         #region GETs
         /// <summary>
-        /// Gets a Metric Subject using a specified {identifier}.
+        /// Gets a Contract using a specified {identifier}.
         ///
         /// verb:       GET
-        /// method:     /api/subject/{id}
+        /// method:     /api/contract/{id}
         ///
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>
-        /// SubjectDto
+        /// ContractDto
         /// </returns>
         [HttpGet ("{id}")]
         [Produces ("application/json")]
-        public ActionResult<SubjectDto> Get (int id)
+        public ActionResult<ContractDto> Get (int id)
         {
-            Logger.Debug ($"Calling Subject -> Get - {id}");
+            Logger.Debug ($"Calling Contract -> Get - {id}");
 
             return ExecuteHttp (
                 () => {
 
                     // Create default return.
-                    SubjectDto _rtn = new SubjectDto ();
+                    ContractDto _rtn = new ContractDto ();
 
                     // Check API Scopes Authorisation.
                     HasSubjectReadScope ();
 
-                    // Get Subject Item.
-                    IResource _s =
+                    // Get Contract Item.
+                    IContract _c =
                         Manager ()
-                            .RepositoryFor<IResource> (Subject)
+                            .RepositoryFor<IContract> (Subject)
                             .Read (id);
 
                     // Create return
-                    if (_s != null) {
-                        _rtn = _rtn.From (_s);
+                    if (_c != null) {
+
+                        _rtn = _rtn.From (_c);
+
                     } else {
-                        throw new EntityNotFoundException ("Subject", id);
+                        throw new EntityNotFoundException ("Contract", id);
                     }
 
                     return _rtn;
@@ -95,14 +99,18 @@ namespace W.Api.Controllers
 
         #region POSTs
         /// <summary>
-        /// Posts a new Metric Subject.
+        /// Posts a new Contract.
+        ///
+        /// verb:       POST
+        /// method:     /api/Contract
+        ///
         /// </summary>
         /// <param name="dto"></param>
-        /// <returns>SubjectDto</returns>
+        /// <returns>ContractDto</returns>
         [HttpPost]
-        public ActionResult<SubjectDto> Post ([FromBody] NewSubjectDto dto)
+        public ActionResult<ContractDto> Post ([FromBody] NewContractDto dto)
         {
-            Logger.Debug ($"Calling Subject -> Post New Metric *Subject* - {dto}");
+            Logger.Debug ($"Calling Contract -> Post New Contract - {dto}");
             return ExecuteHttp (
                 () => {
 
@@ -110,29 +118,31 @@ namespace W.Api.Controllers
                     HasSubjectWriteScope ();
                     HasSubjectReadScope ();
 
-                    SubjectDto _rtn = new SubjectDto ();
+                    ContractDto _rtn = new ContractDto ();
 
                     Manager ().Scoped (
                         (trans) => {
 
                             Logger.Info (
-                                $"Creating new Subject '{dto.Name}'"
+                                $"Creating new Contract for SubjectIdentifier '{Subject.Identifier}' and Provider '{Subject.Provider}'"
                             );
 
-                            // Create new Subject
-                            IResource _s = new Subject (Manager (), Subject) {
+                            // Create new Contract
+                            // NB. We use the SubjectIdentifier and Provider from the access_token provided in the call to this method.
+                            IContract _c = new Contract (Manager (), Subject) {                        
                                 Name = dto.Name,
                                 Description = dto.Description,
                                 CreatedOn = DateTime.Now
                             };
 
-                            // Save new Subject
+                            // Save new Contract
                             Manager ()
-                                .RepositoryFor<IResource> (Subject)
-                                .Upsert (_s, trans);
+                                .RepositoryFor<IContract> (Subject)
+                                .Upsert (_c, trans);
 
-                            // Return new Subject
-                            _rtn = _rtn.From (_s);
+                            // Return new Contract
+                            _rtn = _rtn.From (_c);
+
                         }
                     );
 

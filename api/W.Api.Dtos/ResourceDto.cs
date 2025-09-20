@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------------------------------------
 //  Product:    Work Management System
-//  File:       GroupDto.cs
+//  File:       ResourceDto.cs
 //  Desciption: 
 //
 //  (c) Martin James Hunter, 2025
@@ -9,19 +9,17 @@
 
 #region Usings
 using System;
-using System.Text.Json;
-using System.Text.Json.Nodes;
 #endregion
 
 namespace W.Api.Dtos
 {
-    public class GroupDto : DtoObject, IDtoObject
+    public class ResourceDto : DtoObject, IDtoObject
     {
         #region Constructor
         /// <summary>
-        /// Initializes a new instance of the <see cref="GroupDto"/> class.
+        /// Initializes a new instance of the <see cref="ResourceDto"/> class.
         /// </summary>
-        public GroupDto () : base () { }
+        public ResourceDto () : base () { }
         #endregion
 
         #region Attributes
