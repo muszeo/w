@@ -49,6 +49,7 @@ namespace W.Api.Controllers
         }
         #endregion
 
+        #region >>>> Catalogues
         #region GETs
         /// <summary>
         /// Gets a Catalogue using a specified {identifier}.
@@ -131,7 +132,7 @@ namespace W.Api.Controllers
                             // NB. We use the SubjectIdentifier and Provider from the access_token provided in the call to this method.
                             ICatalogue _c = new Catalogue (Manager (), Subject) {
                                 Name = dto.Name,
-                                Description = dto.Description,                                
+                                Description = dto.Description,
                                 CreatedOn = DateTime.Now
                             };
 
@@ -157,6 +158,21 @@ namespace W.Api.Controllers
         #endregion
 
         #region DELETEs
+        #endregion
+
+        #region >>>> >>>> Services
+        #region GETs
+        #endregion
+
+        #region POSTs
+        #endregion
+
+        #region PUTs
+        #endregion
+
+        #region DELETEs
+        #endregion
+        #endregion
         #endregion
     }
 }

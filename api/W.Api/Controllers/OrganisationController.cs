@@ -6,6 +6,7 @@
 //  Domain:
 //  - Organisation
 //  - Site
+//  - Contacts
 //
 //  (c) Martin James Hunter, 2025
 //
@@ -49,6 +50,7 @@ namespace W.Api.Controllers
         }
         #endregion
 
+        #region >>>> Organisations
         #region GETs
         /// <summary>
         /// Gets a Organisation using a specified {identifier}.
@@ -131,7 +133,7 @@ namespace W.Api.Controllers
                             // NB. We use the SubjectIdentifier and Provider from the access_token provided in the call to this method.
                             IOrganisation _c = new Organisation (Manager (), Subject) {
                                 Name = dto.Name,
-                                Description = dto.Description,                                
+                                Description = dto.Description,
                                 CreatedOn = DateTime.Now
                             };
 
@@ -157,6 +159,35 @@ namespace W.Api.Controllers
         #endregion
 
         #region DELETEs
+        #endregion
+
+        #region >>>> Sites
+        #region GETs
+        #endregion
+
+        #region POSTs
+        #endregion
+
+        #region PUTs
+        #endregion
+
+        #region DELETEs
+        #endregion
+        #endregion
+
+        #region >>>> >>>> Contacts
+        #region GETs
+        #endregion
+
+        #region POSTs
+        #endregion
+
+        #region PUTs
+        #endregion
+
+        #region DELETEs
+        #endregion
+        #endregion
         #endregion
     }
 }

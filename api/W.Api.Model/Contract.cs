@@ -33,7 +33,8 @@ namespace W.Api.Model
 
         #region Attributes
         // Related Entities
-        public int With__ClientId { get; set; }
+        public int TenancyId { get; set; }
+        public int Client__OrganisationId { get; set; }
 
         // Attributes
         public string Name { get; set; }
@@ -42,14 +43,26 @@ namespace W.Api.Model
 
         #region Related Entities
         /// <summary>
-        /// Get the Client for this Contract
+        /// Get the Tenancy for this Contract
         /// </summary>
-        public IClient With
+        public ITenancy Tenancy
         {
             get {
                 return Manager
-                    .RepositoryFor<IClient> (ClaimsSubject)
-                    .Read (With__ClientId);
+                    .RepositoryFor<ITenancy> (ClaimsSubject)
+                    .Read (TenancyId);
+            }
+        }
+
+        /// <summary>
+        /// Get the Client Organisation for this Contract
+        /// </summary>
+        public IOrganisation Client
+        {
+            get {
+                return Manager
+                    .RepositoryFor<IOrganisation> (ClaimsSubject)
+                    .Read (Client__OrganisationId);
             }
         }
 

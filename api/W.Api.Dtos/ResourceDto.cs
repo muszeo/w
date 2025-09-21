@@ -23,8 +23,11 @@ namespace W.Api.Dtos
         #endregion
 
         #region Attributes
+        // Attributes
         public string Name { get; set; }
         public string Description { get; set; }
+
+        // Audit
         public DateTime CreatedOn { get; set; }
         #endregion
     }

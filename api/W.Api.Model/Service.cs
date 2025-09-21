@@ -11,6 +11,7 @@
 using System;
 using W.Api.Authorisation;
 using W.Api.Model.Interfaces;
+using System.Collections.Generic;
 #endregion
 
 namespace W.Api.Model
@@ -47,6 +48,34 @@ namespace W.Api.Model
                 return Manager
                     .RepositoryFor<ICatalogue> (ClaimsSubject)
                     .Read (CatalogueId);
+            }
+        }
+
+        /// <summary>
+        /// Gets the Tasks performances of this Service 
+        /// </summary>
+        public IList<ITask> Tasks
+        {
+            get {
+                return Manager
+                    .RepositoryFor<ITask> (ClaimsSubject)
+                    .ReadWhere (
+                        $"ServiceId = {Id}"
+                    );
+            }
+        }
+
+        /// <summary>
+        /// Gets the Contracts that this Service appears in 
+        /// </summary>
+        public IList<IContract> Contracts
+        {
+            get {
+                return Manager
+                    .RepositoryFor<IContract> (ClaimsSubject)
+                    .ReadWhere (
+                        $"ServiceId = {Id}"
+                    );
             }
         }
         #endregion

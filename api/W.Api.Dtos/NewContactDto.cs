@@ -1,6 +1,6 @@
 //----------------------------------------------------------------------------------------------------------
 //  Product:    Work Management System
-//  File:       IResourceContact.cs
+//  File:       NewContactDto.cs
 //  Desciption: 
 //
 //  (c) Martin James Hunter, 2025
@@ -11,20 +11,14 @@
 using System;
 #endregion
 
-namespace W.Api.Model.Interfaces
+namespace W.Api.Dtos
 {
-    public interface IResourceContact : IModelObject
+    public class NewContactDto : NewDtoObject, INewDtoObject
     {
         #region Attributes
         // Attributes
-        #endregion
-
-        #region Related Entities
-        IResource Resource { get; }
-        IContact Contact { get; }
-        #endregion
-
-        #region Operations
+        public string Name { get; set; }
+        public string Description { get; set; }
         #endregion
     }
 }

@@ -32,6 +32,7 @@ namespace W.Api.Model
 
         #region Attributes
         // Related Entities
+        public int TenancyId { get; set; }
         public int BasedAt__LocationId { get; set; }
 
         // Attributes
@@ -41,7 +42,19 @@ namespace W.Api.Model
 
         #region Related Entities
         /// <summary>
-        /// BasedAt Location for this Resource
+        /// Gets the Tenancy for this Resource
+        /// </summary>
+        public ITenancy Tenancy
+        {
+            get {
+                return Manager
+                    .RepositoryFor<ITenancy> (ClaimsSubject)
+                    .Read (TenancyId);
+            }
+        }
+
+        /// <summary>
+        /// Gets the BasedAt Location for this Resource
         /// </summary>
         public ILocation BasedAt
         {

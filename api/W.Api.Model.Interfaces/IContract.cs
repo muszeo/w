@@ -18,7 +18,8 @@ namespace W.Api.Model.Interfaces
     {
         #region Attributes
         // Related Entities
-        int With__ClientId { get; set; }
+        int TenancyId { get; set; }
+        int Client__OrganisationId { get; set; }
 
         // Attributes
         string Name { get; set; }
@@ -26,7 +27,8 @@ namespace W.Api.Model.Interfaces
         #endregion
 
         #region Related Entities
-        IClient With { get; }
+        ITenancy Tenancy { get; }
+        IOrganisation Client { get; }
         IList<ITask> Tasks { get; }
         IList<IService> Services { get; }
         #endregion

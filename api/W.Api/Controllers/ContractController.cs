@@ -5,7 +5,7 @@
 //
 //  Domain:
 //  - Contract
-//  - Client
+//  - Contracted Services
 //
 //  (c) Martin James Hunter, 2025
 //
@@ -49,6 +49,7 @@ namespace W.Api.Controllers
         }
         #endregion
 
+        #region >>>> Contracts
         #region GETs
         /// <summary>
         /// Gets a Contract using a specified {identifier}.
@@ -129,7 +130,7 @@ namespace W.Api.Controllers
 
                             // Create new Contract
                             // NB. We use the SubjectIdentifier and Provider from the access_token provided in the call to this method.
-                            IContract _c = new Contract (Manager (), Subject) {                        
+                            IContract _c = new Contract (Manager (), Subject) {
                                 Name = dto.Name,
                                 Description = dto.Description,
                                 CreatedOn = DateTime.Now
@@ -157,6 +158,7 @@ namespace W.Api.Controllers
         #endregion
 
         #region DELETEs
+        #endregion
         #endregion
     }
 }

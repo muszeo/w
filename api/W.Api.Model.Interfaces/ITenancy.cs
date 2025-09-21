@@ -17,6 +17,9 @@ namespace W.Api.Model.Interfaces
     public interface ITenancy : IModelObject
     {
         #region Attributes
+        // Related Entities
+        int Tenant__OrganisationId { get; set; }
+
         // Attributes
         Guid Identifier { get; set; }
         string Name { get; set; }
@@ -24,6 +27,7 @@ namespace W.Api.Model.Interfaces
         #endregion
 
         #region Related Entities
+        IOrganisation Tenant { get; }
         #endregion
 
         #region Operations

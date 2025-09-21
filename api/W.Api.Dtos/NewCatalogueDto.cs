@@ -19,6 +19,7 @@ namespace W.Api.Dtos
     public class NewCatalogueDto : NewDtoObject, INewDtoObject
     {
         #region Attributes
+        // Attributes
         public string Name { get; set; }
         public string Description { get; set; }
         #endregion

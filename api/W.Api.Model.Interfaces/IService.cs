@@ -9,6 +9,7 @@
 
 #region Usings
 using System;
+using System.Collections.Generic;
 #endregion
 
 namespace W.Api.Model.Interfaces
@@ -24,6 +25,8 @@ namespace W.Api.Model.Interfaces
 
         #region Related Entities
         ICatalogue Catalogue { get; }
+        IList<ITask> Tasks { get; }
+        IList<IContract> Contracts { get; }
         #endregion
 
         #region Operations

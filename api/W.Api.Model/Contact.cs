@@ -31,9 +31,21 @@ namespace W.Api.Model
         #endregion
 
         #region Attributes
+        public int OrganisationId { get; set; }
         #endregion
 
         #region Related Entities
+        /// <summary>
+        /// Get the Organisation for this Contact
+        /// </summary>
+        public IOrganisation Organisation
+        {
+            get {
+                return Manager
+                    .RepositoryFor<IOrganisation> (ClaimsSubject)
+                    .Read (OrganisationId);
+            }
+        }
         #endregion
 
         #region Public Operations

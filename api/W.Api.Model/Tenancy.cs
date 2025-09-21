@@ -31,6 +31,9 @@ namespace W.Api.Model
         #endregion
 
         #region Attributes
+        // Related Entities
+        public int Tenant__OrganisationId { get; set; }
+
         // Attributes
         public Guid Identifier { get; set; }
         public string Name { get; set; }
@@ -38,6 +41,17 @@ namespace W.Api.Model
         #endregion
 
         #region Related Entities
+        /// <summary>
+        /// Get this Tenancy's Tenant Organisation
+        /// </summary>
+        public IOrganisation Tenant
+        {
+            get {
+                return Manager
+                    .RepositoryFor<IOrganisation> (ClaimsSubject)
+                    .Read (Tenant__OrganisationId);
+            }
+        }
         #endregion
 
         #region Public Operations

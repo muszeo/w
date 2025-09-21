@@ -69,9 +69,9 @@ namespace W.Api.Model
         }
 
         /// <summary>
-        /// Gets this Tasks's occurance Location
+        /// Gets this Tasks's Location
         /// </summary>
-        public ILocation OccursAt
+        public ILocation Location
         {
             get {
                 return Manager

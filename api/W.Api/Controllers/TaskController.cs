@@ -5,6 +5,7 @@
 //
 //  Domain:
 //  - Task
+//  - Allocation (of Resource(s) to Task)
 //
 //  (c) Martin James Hunter, 2025
 //
@@ -48,6 +49,7 @@ namespace W.Api.Controllers
         }
         #endregion
 
+        #region >>>> Tasks
         #region GETs
         /// <summary>
         /// Gets a Task using a specified {identifier}.
@@ -165,6 +167,21 @@ namespace W.Api.Controllers
         #endregion
 
         #region DELETEs
+        #endregion
+
+        #region >>>> >>>> Allocations
+        #region GETs
+        #endregion
+
+        #region POSTs
+        #endregion
+
+        #region PUTs
+        #endregion
+
+        #region DELETEs
+        #endregion
+        #endregion
         #endregion
     }
 }

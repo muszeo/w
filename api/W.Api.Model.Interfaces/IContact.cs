@@ -17,10 +17,14 @@ namespace W.Api.Model.Interfaces
     public interface IContact : IModelObject
     {
         #region Attributes
+        // Related Entities
+        int OrganisationId { get; set; }
+
         // Attributes
         #endregion
 
         #region Related Entities
+        IOrganisation Organisation { get; }
         #endregion
 
         #region Operations

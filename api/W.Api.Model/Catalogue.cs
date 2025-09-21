@@ -12,6 +12,7 @@ using System;
 using W.Api.Authorisation;
 using W.Api.Model.Interfaces;
 using System.Collections.Generic;
+using Microsoft.Extensions.Caching.Memory;
 #endregion
 
 namespace W.Api.Model
@@ -32,11 +33,27 @@ namespace W.Api.Model
         #endregion
 
         #region Attributes
+        // Related Entities
+        public int TenancyId { get; set; }
+
+        // Attributes
         public string Name { get; set; }
         public string Description { get; set; }
         #endregion
 
         #region Related Entities
+        /// <summary>
+        /// Get this Catalogue's Tenancy
+        /// </summary>
+        public ITenancy Tenancy
+        {
+            get {
+                return Manager
+                    .RepositoryFor<ITenancy> (ClaimsSubject)
+                    .Read (TenancyId);
+            }
+        }
+
         /// <summary>
         /// Get Services for this Catalogue
         /// </summary>

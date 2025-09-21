@@ -17,6 +17,9 @@ namespace W.Api.Model.Interfaces
     public interface ICatalogue : IModelObject
     {
         #region Attributes
+        // Related Entities
+        int TenancyId { get; set; }
+
         // Attributes
         string Name { get; set; }
         string Description { get; set; }
